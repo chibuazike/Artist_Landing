@@ -26,7 +26,7 @@ export default function ArtistLandingPage() {
     email: 'booking@livalil.music',
     instagram: 'https://instagram.com/liv.a.lil',
     youtube: 'https://youtube.com/@lunarose',
-    spotifyEmbed: 'https://open.spotify.com/artist/7BLm6ST1GFRn73L7ghEMEw?si=uSgsGmTcRqqfp7e3kwRhZw',
+    spotifyEmbed: 'https://open.spotify.com/album/0IXUYnV0Y4GJQjxdIEECub?si=3a7t9ACcTCW_hhbrGYIvcw',
     heroImage: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&h=600&fit=crop',
     shows: [
       { date: '2026-02-15', venue: 'The Echo, Los Angeles', tickets: 'https://tickets.example.com' },
