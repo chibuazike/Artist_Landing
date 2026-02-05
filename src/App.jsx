@@ -20,13 +20,13 @@ export default function ArtistLandingPage() {
   const [sendingEmail, setSendingEmail] = useState(false);
 
   const [content, setContent] = useState({
-    artistName: 'Luna Rose',
+    artistName: 'Livalil',
     tagline: 'Singer · Songwriter · Producer',
     bio: 'Creating music that touches the soul. Blending indie pop with electronic elements to tell stories that resonate.',
     email: 'booking@lunarose.music',
-    instagram: 'https://instagram.com/lunarose',
+    instagram: 'https://instagram.com/liv.a.lil',
     youtube: 'https://youtube.com/@lunarose',
-    spotifyEmbed: 'https://open.spotify.com/embed/artist/example',
+    spotifyEmbed: 'https://open.spotify.com/artist/7BLm6ST1GFRn73L7ghEMEw?si=uSgsGmTcRqqfp7e3kwRhZw',
     heroImage: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&h=600&fit=crop',
     shows: [
       { date: '2026-02-15', venue: 'The Echo, Los Angeles', tickets: 'https://tickets.example.com' },
