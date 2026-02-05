@@ -23,7 +23,7 @@ export default function ArtistLandingPage() {
     artistName: 'Livalil',
     tagline: 'Singer · Songwriter · Producer',
     bio: 'Creating music that touches the soul. Blending indie pop with electronic elements to tell stories that resonate.',
-    email: 'booking@lunarose.music',
+    email: 'booking@livalil.music',
     instagram: 'https://instagram.com/liv.a.lil',
     youtube: 'https://youtube.com/@lunarose',
     spotifyEmbed: 'https://open.spotify.com/artist/7BLm6ST1GFRn73L7ghEMEw?si=uSgsGmTcRqqfp7e3kwRhZw',
