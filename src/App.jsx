@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Music, Instagram, Youtube, Calendar, Mail, Edit2, Save, X } from 'lucide-react';
+import { Music, Instagram, Youtube, Calendar, Mail, Edit2, Save, X, Send } from 'lucide-react';
 
 const SUPABASE_URL = 'https://wytwlrxchwugrbifpzjc.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5dHdscnhjaHd1Z3JiaWZwempjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxNjE1NDksImV4cCI6MjA4NTczNzU0OX0.Z8WYWDRPDbqAAGV2Ob_pRXK8LEbes0LT1_TApySXLl0';
@@ -10,14 +10,22 @@ export default function ArtistLandingPage() {
   const [password, setPassword] = useState('');
   const [showLogin, setShowLogin] = useState(false);
   const [loading, setLoading] = useState(true);
+  
+  // Contact form state
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [sendingEmail, setSendingEmail] = useState(false);
 
   const [content, setContent] = useState({
-    artistName: 'Livalil',
+    artistName: 'Luna Rose',
     tagline: 'Singer · Songwriter · Producer',
     bio: 'Creating music that touches the soul. Blending indie pop with electronic elements to tell stories that resonate.',
-    email: 'booking@livalilil.music',
-    instagram: 'https://instagram.com/livalil',
-    youtube: 'https://youtube.com/@livalil',
+    email: 'booking@lunarose.music',
+    instagram: 'https://instagram.com/lunarose',
+    youtube: 'https://youtube.com/@lunarose',
     spotifyEmbed: 'https://open.spotify.com/embed/artist/example',
     heroImage: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&h=600&fit=crop',
     shows: [
@@ -131,6 +139,50 @@ export default function ArtistLandingPage() {
       ...editContent,
       shows: editContent.shows.filter((_, i) => i !== index)
     });
+  };
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setSendingEmail(true);
+
+    try {
+      // EmailJS configuration - replace these with your actual values
+      const serviceID = 'YOUR_SERVICE_ID';
+      const templateID = 'YOUR_TEMPLATE_ID';
+      const publicKey = 'YOUR_PUBLIC_KEY';
+
+      const templateParams = {
+        from_name: contactForm.name,
+        from_email: contactForm.email,
+        message: contactForm.message,
+        to_email: content.email
+      };
+
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service_id: serviceID,
+          template_id: templateID,
+          user_id: publicKey,
+          template_params: templateParams
+        })
+      });
+
+      if (response.ok) {
+        alert('Message sent successfully!');
+        setContactForm({ name: '', email: '', message: '' });
+      } else {
+        throw new Error('Failed to send');
+      }
+    } catch (error) {
+      console.error('Email error:', error);
+      alert('Failed to send message. Please try again or email directly.');
+    } finally {
+      setSendingEmail(false);
+    }
   };
 
   if (loading) {
@@ -396,6 +448,7 @@ export default function ArtistLandingPage() {
       {/* Contact Section */}
       <div className="max-w-4xl mx-auto px-4 py-20">
         <h2 className="text-4xl font-bold mb-8">Get in Touch</h2>
+        
         {isEditing ? (
           <div className="space-y-4">
             <input
@@ -418,12 +471,65 @@ export default function ArtistLandingPage() {
             />
           </div>
         ) : (
-          <p className="text-xl text-gray-300">
-            For bookings and inquiries:{' '}
-            <a href={`mailto:${content.email}`} className="text-purple-400 hover:text-purple-300 transition-colors">
-              {content.email}
-            </a>
-          </p>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <p className="text-xl text-gray-300 mb-6">
+                For bookings and inquiries:{' '}
+                <a href={`mailto:${content.email}`} className="text-purple-400 hover:text-purple-300 transition-colors">
+                  {content.email}
+                </a>
+              </p>
+              <div className="flex gap-4">
+                <a href={content.instagram} target="_blank" rel="noopener noreferrer" 
+                   className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-all">
+                  <Instagram size={24} />
+                </a>
+                <a href={content.youtube} target="_blank" rel="noopener noreferrer"
+                   className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-all">
+                  <Youtube size={24} />
+                </a>
+              </div>
+            </div>
+            
+            <form onSubmit={handleContactSubmit} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={contactForm.name}
+                onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                required
+                className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                value={contactForm.email}
+                onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                required
+                className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <textarea
+                placeholder="Your Message"
+                value={contactForm.message}
+                onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                required
+                rows={4}
+                className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <button
+                type="submit"
+                disabled={sendingEmail}
+                className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-purple-800 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+              >
+                {sendingEmail ? 'Sending...' : (
+                  <>
+                    <Send size={18} />
+                    Send Message
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
         )}
       </div>
     </div>
